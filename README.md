@@ -1,71 +1,92 @@
-# Projeto Pipeline de Empregos Formais no Brasil - CAGED
+# 🏭 Pipeline ETL — Empregos Formais no Brasil (CAGED)
 
-Este projeto implementa um pipeline ETL (Extract, Transform, Load) para processar dados do CAGED (Cadastro Geral de Empregados e Desempregados) do Brasil, utilizando Python, pandas e SQLite.
+## 🧾 Descrição do Projeto
 
-## Estrutura do Projeto
+Pipeline ETL completo para processamento de dados do **CAGED** (Cadastro Geral de Empregados e Desempregados), fonte oficial do governo brasileiro sobre movimentação do mercado de trabalho formal.
+
+O projeto automatiza a extração direta do site do governo, transformação e carga dos dados em banco relacional — seguindo as etapas reais de um pipeline de dados em produção.
+
+---
+
+## 📈 Por que o CAGED importa
+
+O CAGED é a principal fonte de dados sobre emprego formal no Brasil, publicada mensalmente pelo Ministério do Trabalho. Analisar esses dados permite identificar tendências de contratação, setores em expansão e regiões com maior movimentação no mercado de trabalho.
+
+---
+
+## ⚙️ Arquitetura do Pipeline
 
 ```
-dados/
-    caged.db
-    raw/
-        caged_abril_2025.xlsx
-caged_pipeline/
-    etl.py
-    extract.py
-    load.py
-    trasform.py
-    requirements .txt
+Fonte: Site do Governo (CAGED)
+    ↓ extract.py — download do arquivo Excel
+    ↓ transform.py — limpeza, padronização e tratamento de nulos
+    ↓ load.py — carga no banco SQLite
+Destino: dados/caged.db
 ```
 
-## Funcionalidades
+---
 
-- **Extração:** Baixa arquivos de dados do CAGED diretamente do site do governo ([`extract.py`](caged_pipeline/extract.py)).
-- **Transformação:** Limpa e organiza os dados, removendo linhas/colunas vazias e preenchendo valores nulos ([`etl.py`](caged_pipeline/etl.py)).
-- **Carga:** Salva os dados tratados em um banco de dados SQLite ([`etl.py`](caged_pipeline/etl.py), [`load.py`](caged_pipeline/load.py), [`trasform.py`](caged_pipeline/trasform.py)).
+## 📂 Estrutura do Repositório
 
-## Como Executar
+```
+📁 dados/
+   ├── caged.db
+   └── raw/
+       └── caged_abril_2025.xlsx
+📁 caged_pipeline/
+   ├── etl.py
+   ├── extract.py
+   ├── transform.py
+   ├── load.py
+   └── requirements.txt
+README.md
+```
 
-1. **Instale as dependências:**
+---
 
-   ```
-   pip install -r caged_pipeline/requirements\ .txt
-   ```
+## 🔧 Tecnologias Utilizadas
 
-2. **Extraia os dados:**
+- **Python 3.8+** — Linguagem principal
+- **pandas** — Transformação e limpeza dos dados
+- **requests** — Extração direta da fonte oficial
+- **openpyxl** — Leitura dos arquivos Excel do governo
+- **SQLAlchemy + SQLite** — Armazenamento dos dados tratados
 
-   Execute o script de extração para baixar o arquivo Excel do CAGED:
+---
 
-   ```
-   python caged_pipeline/extract.py
-   ```
+## 🚀 Como Executar
 
-3. **Execute o pipeline ETL completo:**
+**1. Instale as dependências:**
+```bash
+pip install -r caged_pipeline/requirements.txt
+```
 
-   ```
-   python caged_pipeline/etl.py
-   ```
+**2. Extraia os dados do governo:**
+```bash
+python caged_pipeline/extract.py
+```
 
-   Isso irá:
-   - Ler o arquivo Excel baixado
-   - Limpar e transformar os dados
-   - Carregar os dados no banco SQLite (`dados/caged.db`)
+**3. Execute o pipeline completo:**
+```bash
+python caged_pipeline/etl.py
+```
 
-## Observações
+O pipeline irá:
+- Ler o arquivo Excel baixado da fonte oficial
+- Limpar e padronizar os dados (remoção de nulos, tipagem, organização)
+- Carregar os dados tratados no banco SQLite (`dados/caged.db`)
 
-- Os caminhos dos arquivos estão configurados para rodar no Windows. Ajuste os caminhos se necessário.
-- O arquivo Excel de entrada deve estar em `dados/raw/caged_abril_2025.xlsx`.
-- O banco de dados SQLite será criado/atualizado em `dados/caged.db`.
+---
 
-## Requisitos
+## 📌 Observações
 
-- Python 3.8+
-- pandas
-- requests
-- openpyxl
-- sqlalchemy
+- Os caminhos estão configurados para Windows — ajuste separadores se rodar em Linux/Mac
+- O arquivo de entrada deve estar em `dados/raw/caged_abril_2025.xlsx`
+- O banco será criado automaticamente em `dados/caged.db` na primeira execução
 
-Veja o arquivo [`requirements .txt`](caged_pipeline/requirements%20.txt) para detalhes.
+---
 
-## Créditos
+## 👨‍💻 Autor
 
-Desenvolvido para análise de dados do CAGED no Brasil.
+**Daniel Caldeirão**
+[LinkedIn](https://www.linkedin.com/in/daniel-cauldron/) • [GitHub](https://github.com/DanielCauldron)
